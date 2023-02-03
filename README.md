@@ -20,7 +20,7 @@ npm install
 ```
 
 ## 使用者流程
-![app structure]('./pictures/drawIO.jpg')
+![app structure](./pictures/drawIO.jpg)
 
 ## 資料夾
 + src - 前端程式碼放置處
