@@ -28,9 +28,27 @@ npm install
 + functions - 後端程式碼的放置處
 + pictures - `README.md` 文件使用到的圖片位置
 
+## 新增商品
+要新增新的商品時，需要到 `src/translator.js`，將商品的中文及英文進去。
+
+```javascript
+// translator.js
+const map = {
+  波龍: 'boston-lobster',
+  帝王蟹: 'king-crab',
+  大閘蟹: 'hairy-crab',
+  生蠔: 'oysters',
+};
+
+const mapReverse = {
+  'boston-lobster': '波龍',
+  'king-crab': '帝王蟹',
+  'hairy-crab': '大閘蟹',
+  oysters: '生蠔',
+};
+```
 
 ## 部署至 Firebase
-
 部署整個 App (前端 + 後端):
 ```bash
 npm install -g firebase-tools
