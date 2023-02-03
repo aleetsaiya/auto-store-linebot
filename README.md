@@ -55,6 +55,9 @@ npm install -g firebase-tools
 
 firebase login
 
+# to build the frontend app to public folder
+npm run build
+
 firebase deploy
 ```
 
