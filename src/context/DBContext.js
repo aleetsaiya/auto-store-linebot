@@ -10,15 +10,7 @@ export function DBContextProvider({ children }) {
 
   useEffect(() => {
     (async function () {
-      const res = await readDBData('/');
-      let processData = {};
-      for (let product in res) {
-        processData[translateToEng(product)] = {
-          ...res[product],
-        };
-      }
-      console.log({ processData });
-      setProducst(processData);
+      await update();
     })();
   }, []);
 
@@ -30,11 +22,24 @@ export function DBContextProvider({ children }) {
     else return {};
   }
 
+  async function update() {
+    const res = await readDBData('/');
+    let processData = {};
+    for (let product in res) {
+      processData[translateToEng(product)] = {
+        ...res[product],
+      };
+    }
+    console.log('Update current data:', processData);
+    setProducst(processData);
+  }
+
   return (
     <useDBContext.Provider
       value={{
         products,
         readDBData,
+        update,
       }}
     >
       {children}

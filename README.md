@@ -28,6 +28,26 @@ npm install
 + functions - 後端程式碼的放置處
 + pictures - `README.md` 文件使用到的圖片位置
 
+
+## 部署至 Firebase
+
+部署整個 App (前端 + 後端):
+```bash
+npm install -g firebase-tools
+
+firebase login
+
+firebase deploy
+```
+
+單純部署後端;
+```bash
+cd functions
+npm run delpoy
+```
+
+單純部署前端: 在專案根目錄執行 `npm run deploy`
+
 ## 使用技術
 + Node.js
 + Express
