@@ -42,7 +42,11 @@ app.post('/webhook', (req, res) => {
 
     // update the database
     const processedData = processMessage(event.message.text);
-    const currentTime = new Date();
+    // Firebase functions server is locate at US
+    // so we add 8 hourses (480 mins) to our date
+    // to be the Taiwan date instance
+    const timeDifference = 480;
+    const currentTime = new Date(event.timestamp + timeDifference * 60 * 1000);
     const { month, day } = formatDate(currentTime);
     const location = processedData.product + '/' + month + day;
     addDataToDB(location, processedData.company, processedData.count);
