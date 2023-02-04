@@ -7,19 +7,35 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
+import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import UndoIcon from '@mui/icons-material/Undo';
 import { Divider } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDB } from '../context/DBContext';
 import { translateToChinese } from '../translator';
+import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const ProductList = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { products } = useDB();
+  const { signOut } = useAuth();
+
+  const isProductContentsRoute = location.pathname === '/products';
 
   function handleClick(path) {
     navigate(path);
+  }
+
+  async function handleSignOut() {
+    const res = await signOut();
+    if (res.status === 'SUCCESS') {
+      toast.success('登出成功');
+    } else {
+      toast.error('登出失敗');
+    }
   }
 
   return (
@@ -43,11 +59,17 @@ const ProductList = () => {
           <List
             subheader={<ListSubheader component="h3">產品列表</ListSubheader>}
           >
-            <ListItemButton onClick={() => handleClick('/')}>
+            <ListItemButton onClick={() => handleClick('/products')}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
               <ListItemText primary="總覽" />
+            </ListItemButton>
+            <ListItemButton onClick={handleSignOut}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="登出" />
             </ListItemButton>
             <Divider />
             {Object.keys(products).map((p, index) => (
@@ -60,22 +82,42 @@ const ProductList = () => {
           </List>
         </nav>
       </Box>
-      <IconButton
-        sx={{
-          display: {
-            xs: 'block',
-            md: 'none',
-          },
-          position: 'fixed',
-          right: '1.2rem',
-          bottom: '1.2rem',
-        }}
-        aria-label="back"
-        color="primary"
-        onClick={() => handleClick('/')}
-      >
-        <UndoIcon />
-      </IconButton>
+      {!isProductContentsRoute && (
+        <IconButton
+          sx={{
+            display: {
+              xs: 'block',
+              md: 'none',
+            },
+            position: 'fixed',
+            right: '1.2rem',
+            bottom: '1.2rem',
+          }}
+          aria-label="back"
+          color="primary"
+          onClick={() => handleClick('/products')}
+        >
+          <UndoIcon />
+        </IconButton>
+      )}
+      {isProductContentsRoute && (
+        <IconButton
+          sx={{
+            display: {
+              xs: 'block',
+              md: 'none',
+            },
+            position: 'fixed',
+            right: '.8rem',
+            bottom: '1.2rem',
+          }}
+          aria-label="logout"
+          color="primary"
+          onClick={handleSignOut}
+        >
+          <LogoutIcon />
+        </IconButton>
+      )}
     </>
   );
 };

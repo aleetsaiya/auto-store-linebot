@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
+import ProtectedRoute from './components/ProtectedRoute';
 import ProductPage from './components/ProductPage';
-import HomePage from './components/HomePage';
-import ProductList from './components/ProductList';
+import ProductContentsPage from './components/ProductContentsPage';
+import LoginPage from './components/LoginPage';
+import NotFoundPage from './components/NotFoundPage';
 import { ToastContainer } from 'react-toastify';
 import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
-  const xsWidth = '100vw';
-  const mdWidth = `calc(${xsWidth} - 200px)`;
-
   return (
-    <>
-      <ProductList />
-      <Box
-        sx={{
-          width: {
-            xs: xsWidth,
-            md: mdWidth,
-          },
-          marginLeft: {
-            xs: '0px',
-            md: '200px',
-          },
-        }}
-      >
+    <React.Fragment>
+      <Box>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products/:productName" element={<ProductPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/products"
+            element={
+              <ProtectedRoute>
+                <ProductContentsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/:productName"
+            element={
+              <ProtectedRoute>
+                <ProductPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Box>
       <ToastContainer
@@ -42,7 +45,7 @@ const App = () => {
         pauseOnHover={false}
         theme="light"
       />
-    </>
+    </React.Fragment>
   );
 };
 

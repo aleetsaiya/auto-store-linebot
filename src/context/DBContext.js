@@ -30,7 +30,7 @@ export function DBContextProvider({ children }) {
         ...res[product],
       };
     }
-    console.log('Update current data:', processData);
+    console.log('Update DB data:', processData);
     setProducst(processData);
   }
 

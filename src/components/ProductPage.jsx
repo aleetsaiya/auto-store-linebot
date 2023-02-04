@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import ProductTable from './ProductTable';
+import ProductList from './ProductList';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
@@ -16,6 +17,8 @@ const ProductPage = () => {
   const params = useParams();
   const { update, products } = useDB();
   const currentProduct = products[params.productName];
+  const xsWidth = '100vw';
+  const mdWidth = `calc(${xsWidth} - 200px)`;
 
   // filter data
   const rows = [];
@@ -73,36 +76,50 @@ const ProductPage = () => {
   }
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom sx={{ margin: '1rem' }}>
-        {translateToChinese(params.productName)}
-      </Typography>
-      <Box sx={{ marginBottom: '1.5rem' }}>
-        <Typography sx={{ display: 'inline-block', marginRight: '2rem' }}>
-          開始日期 : &nbsp;
-          <input
-            type="date"
-            id="start"
-            value={startDate}
-            onChange={handleDateChanged}
-          />
+    <Box
+      sx={{
+        width: {
+          xs: xsWidth,
+          md: mdWidth,
+        },
+        marginLeft: {
+          xs: '0px',
+          md: '200px',
+        },
+      }}
+    >
+      <ProductList />
+      <Container>
+        <Typography variant="h4" gutterBottom sx={{ margin: '1rem' }}>
+          {translateToChinese(params.productName)}
         </Typography>
-        <Typography sx={{ display: 'inline-block', marginRight: '2rem' }}>
-          結束日期 : &nbsp;
-          <input
-            type="date"
-            id="end"
-            value={endDate}
-            onChange={handleDateChanged}
-          />
-        </Typography>
-        <IconButton aria-label="refresh" onClick={handleRefresh}>
-          <RefreshIcon />
-        </IconButton>
-      </Box>
-      <ProductTable rows={rows} />
-      <GutterBottom />
-    </Container>
+        <Box sx={{ marginBottom: '1.5rem' }}>
+          <Typography sx={{ display: 'inline-block', marginRight: '2rem' }}>
+            開始日期 : &nbsp;
+            <input
+              type="date"
+              id="start"
+              value={startDate}
+              onChange={handleDateChanged}
+            />
+          </Typography>
+          <Typography sx={{ display: 'inline-block', marginRight: '2rem' }}>
+            結束日期 : &nbsp;
+            <input
+              type="date"
+              id="end"
+              value={endDate}
+              onChange={handleDateChanged}
+            />
+          </Typography>
+          <IconButton aria-label="refresh" onClick={handleRefresh}>
+            <RefreshIcon />
+          </IconButton>
+        </Box>
+        <ProductTable rows={rows} />
+        <GutterBottom />
+      </Container>
+    </Box>
   );
 };
 
