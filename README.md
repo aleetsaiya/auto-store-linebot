@@ -1,7 +1,7 @@
 # auto store linebot
 
 ## 功能
-讓使用者能夠透過傳送 Line 訊息更新 Firebase 資料庫，並建立網頁顯示 Firebase 資料庫內容。
+讓使用者能夠透過傳送 Line 訊息更新 Firebase 資料庫。
 
 ## 安裝
 ```bash
